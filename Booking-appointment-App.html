@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    
+</head>
+<body>
+<div class="container">
+    <form action="#" id="addform">
+        <div class="container">
+        
+            <h1 style="text-align: center;">Book A Call</h1>
+            <h3 style="text-align: center;">Book a call slot and our representative will call you within 1hr of selected time.</h3>
+            <label class="form-label">Name</label>
+   
+            <input type="text" class="form-control" id="uname" >
+
+            <label class="form-label">Email</label>
+
+            <input type="email" id="uemail" class="form-control">
+
+            <label class="form-label">Phone</label>
+
+            <input type="number" id="unumber" class="form-control" >
+
+            <label class="form-label">Time For Call</label>
+
+            <input type="date"  id="udate" class="form-control" >
+            <input type="time"  id="utime"  class="form-control">
+            <br>
+            <input type="submit" class="bg-success" value="submit" >
+        </div>
+    </form>
+    <script>
+        // localStorage.setItem('name','bob');
+        // localStorage.removeItem('name');
+
+        // sessionStorage.setItem('name','ravi');
+        // sessionStorage.removeItem('name');
+
+        // document.cookie='name=kyle; expires=' + new Date(2020 , 0 , 1).toUTCString();
+        
+        var form = document.getElementById('addform');
+
+        form.addEventListener('submit', store);
+
+        function store(e){
+            e.preventDefault()
+
+            var name = document.getElementById('uname').value;
+            var email = document.getElementById('uemail').value;
+            var number = document.getElementById('unumber').value;
+            var date = document.getElementById('udate').value;
+            var time = document.getElementById('utime').value;
+
+            localStorage.setItem('name',name);
+            localStorage.setItem('email',email);
+            localStorage.setItem('number',number); 
+            localStorage.setItem('date',date);
+            localStorage.setItem('time',time);
+
+            alert('Form data has been stored in local storage.');
+
+
+
+        }
+
+    </script>
+</body>
+</html>
