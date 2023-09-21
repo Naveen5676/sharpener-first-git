@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="form">
+    <label>Name</label>
+    <input type="text" id="name">
+    <label>Email</label>
+    <input type="email" id="email">
+    <label>Phone Number</label>
+    <input type="number" id="phnumber">
+    <input type="submit" value="submit">
+    </form>
+    <ul id="listinfo" class="list-group">
+    </ul>
+    <script>
+
+        var infolist = document.getElementById('listinfo');
+        //get id of the form 
+        var dataform = document.getElementById('form');
+        // add an event listener 
+        dataform.addEventListener('submit', savedata);
+        //fucntion to save data in local storage 
+        function savedata(e){
+            e.preventDefault();
+
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var phnumber = document.getElementById('phnumber').value;
+
+            let formobj = {
+                'name':name ,
+                'email':email,
+                'phone number':phnumber
+
+            };
+            //convert the object to string using JSON stringify
+            var formobj_serialized = JSON.stringify(formobj);
+            //store into local storage
+            localStorage.setItem(email ,formobj_serialized)
+
+
+            //create a new li element 
+            var li = document.createElement('li');
+            //add text element to the li
+            li.appendChild(document.createTextNode('Name: ' + name + ', Email: ' + email + ', Phone Number: ' + phnumber));
+
+            infolist.appendChild(li);
+
+        }
+
+
+    </script>
+</body>
+</html>
