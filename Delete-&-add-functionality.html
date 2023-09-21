@@ -25,6 +25,7 @@
         <h2 class="title">Add Items</h2>
         <form id="addForm" class="form-inline mb-3">
           <input type="text" class="form-control mr-2" id="item">
+          <input type="text" class="form-control mr-2" id="descriptionitem">
           <input type="submit" class="btn btn-dark" value="Submit">
         </form>
         <h2 class="title">Items</h2>
@@ -40,6 +41,7 @@
       <script>
         var form = document.getElementById('addForm');
         var itemlist = document.getElementById('items');
+        var filter = document.getElementById('filter');
 
 
         //form submit event 
@@ -51,6 +53,7 @@
 
             //get input value
             var newitem = document.getElementById('item').value;
+            var descriptionitem = document.getElementById('descriptionitem').value;
 
             //create new li element
             var li = document.createElement('li');
@@ -58,6 +61,7 @@
             li.className='list-group-item';
             // add text node with input value
             li.appendChild(document.createTextNode(newitem));
+            li.appendChild(document.createTextNode(descriptionitem));
 
             //create delete button elemtn at the right side
             var deletebtn = document.createElement('button');
@@ -91,8 +95,29 @@
 
                 }
             }
-             
+        }
 
+        //filter event 
+        filter.addEventListener('keyup', filteritem);
+
+        function filteritem(e){
+          //conver text to lower case
+          var text = e.target.value.toLowerCase();
+
+          //get li's
+          var items = itemlist.getElementsByTagName('li');
+          // convert to an array 
+          Array.from(items).forEach(function(item){
+            //var itemname = item.firstChild.textContent;
+            var itemname = item.childNodes[0].textContent;
+            var ditemname = item.childNodes[1].textContent
+            if(itemname.toLowerCase().indexOf(text)!=-1 || ditemname.toLowerCase().indexOf(text)!=-1){
+              item.style.display="block";
+            }else{
+              item.style.display ="none"
+            }
+
+          });
 
         }
       </script>
