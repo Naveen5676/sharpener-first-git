@@ -48,22 +48,58 @@
 
         form.addEventListener('submit', store);
 
+        // // fucntion to store in locl storege in this case when new data is submitted the odl data is 
+        // // overwritten 
+        // function store(e){
+        //     e.preventDefault()
+
+        //     var name = document.getElementById('uname').value;
+        //     var email = document.getElementById('uemail').value;
+        //     var number = document.getElementById('unumber').value;
+        //     var date = document.getElementById('udate').value;
+        //     var time = document.getElementById('utime').value;
+
+        //     localStorage.setItem('name',name);
+        //     localStorage.setItem('email',email);
+        //     localStorage.setItem('number',number); 
+        //     localStorage.setItem('date',date);
+        //     localStorage.setItem('time',time);
+
+        //     alert('Form data has been stored in local storage.');
+        // }
+        
+        //fucntion used to store data  using object 
         function store(e){
             e.preventDefault()
-
+            
+            //get the form input value
             var name = document.getElementById('uname').value;
             var email = document.getElementById('uemail').value;
             var number = document.getElementById('unumber').value;
             var date = document.getElementById('udate').value;
             var time = document.getElementById('utime').value;
 
-            localStorage.setItem('name',name);
-            localStorage.setItem('email',email);
-            localStorage.setItem('number',number); 
-            localStorage.setItem('date',date);
-            localStorage.setItem('time',time);
+            //create an object to store the form data
+            var formdata = {
+                'name':name,
+                'email':email,
+                'number':number ,
+                'date':date,
+                'time':time
+            };
 
-            alert('Form data has been stored in local storage.');
+            //convert the object to json string 
+            var formData_serialized = JSON.stringify(formdata);
+
+            //store the json string in local storage
+            localStorage.setItem('formData', formData_serialized);
+
+            alert('form data has been stored in local storage');
+
+
+
+
+
 
 
 
