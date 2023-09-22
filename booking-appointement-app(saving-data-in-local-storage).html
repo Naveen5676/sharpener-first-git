@@ -33,25 +33,44 @@
             var phnumber = document.getElementById('phnumber').value;
 
             let formobj = {
-                'name':name ,
-                'email':email,
-                'phone number':phnumber
+                name ,
+                email,
+                phnumber
 
             };
             //convert the object to string using JSON stringify
             var formobj_serialized = JSON.stringify(formobj);
             //store into local storage
-            localStorage.setItem(email ,formobj_serialized)
+            localStorage.setItem(formobj.email ,formobj_serialized);
+            showUserOnScreen(formobj);
+    
+        }
+        function showUserOnScreen(formobj){
+            const parentElem = document.getElementById('listinfo');
 
+            const childElem = document.createElement('li');
+            childElem.textContent=formobj.name+'-'+ formobj.email+'-'+formobj.phnumber;
 
-            //create a new li element 
-            var li = document.createElement('li');
-            //add text element to the li
-            li.appendChild(document.createTextNode('Name: ' + name + ', Email: ' + email + ', Phone Number: ' + phnumber));
+            const deletebutton = document.createElement('input');
+            deletebutton.type='button';
+            deletebutton.value='delete';
+            deletebutton.onclick = () =>{
+                localStorage.removeItem(formobj.email);
+                parentElem.removeChild(childElem);
+            }
+            childElem.appendChild(deletebutton);
+            parentElem.appendChild(childElem)
 
-            infolist.appendChild(li);
 
         }
+
+        
+
+        
+
+      
+
+        
 
 
     </script>
