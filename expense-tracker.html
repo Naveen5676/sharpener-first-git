@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" id="form">
+        <label>Choose Expense Amount</label>
+        <input type="number" id="eamount">
+        <label>Choose Description</label>
+        <input type="text" id="desc">
+        <label>Choose A Category</label>
+        <select name="category" id="category">
+            <option value="fuel">fuel</option>
+            <option value="food">food</option>
+            <option value="electricity">electricity</option>
+            <option value="movie">movie</option>
+        </select>
+        <input type="submit" value="Add Expense">
+
+        <ul id="list" class="list-group">
+
+        </ul>
+    
+    </form>
+    
+</body>
+<script>
+    var form = document.getElementById('form');
+    var list = document.getElementById('list');
+
+    form.addEventListener('submit', savedata);
+
+    window.addEventListener('load', loadStoredData);
+
+    function savedata(e){
+        e.preventDefault();
+        var amount = document.getElementById('eamount').value;
+        var desc =document.getElementById("desc").value ;
+        var cat = document.getElementById("category").value;
+        
+        let infoobj={
+            amount,
+            desc,
+            cat
+        };
+
+        var infoobj_serialized = JSON.stringify(infoobj);
+
+        localStorage.setItem(infoobj.desc, infoobj_serialized);
+
+        displayonscreen(infoobj);
+    }
+    function displayonscreen(infoobj){
+        const parentelem = document.getElementById('list');
+
+        const childelem = document.createElement('li');
+        
+        childelem.textContent=`${infoobj.amount}, ${infoobj.desc}, ${infoobj.cat}`
+        
+        const deletebtn = document.createElement('input');
+        deletebtn.type='button';
+        deletebtn.value='delete';
+        deletebtn.onclick=()=>{
+            localStorage.removeItem(infoobj.desc)
+            parentelem.removeChild(childelem)
+        }
+
+        const editbtn = document.createElement('input')
+        editbtn.type='submit'
+        editbtn.value='edit'
+        editbtn.onclick =() =>{
+            var eamount = document.getElementById('eamount');
+            var desc = document.getElementById('desc');
+            var cat = document.getElementById('category');
+
+            eamount.value = infoobj.amount
+            desc.value = infoobj.desc
+            cat.value = infoobj.cat
+
+            localStorage.removeItem(infoobj.desc);
+            parentelem.removeChild(childelem);
+        }
+
+        const buttoncontainer = document.createElement('div')
+        buttoncontainer.appendChild(deletebtn);
+        buttoncontainer.appendChild(editbtn);
+        childelem.appendChild(buttoncontainer);
+        parentelem.appendChild(childelem);
+    
+    }
+
+    function loadStoredData() {
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const storedData = JSON.parse(localStorage.getItem(key));
+                displayonscreen(storedData);
+            }
+        }
+
+
+
+
+
+</script>
+</html>
