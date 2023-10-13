@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="form">
+    <label>Name</label>
+    <input type="text" id="name">
+    <label>Email</label>
+    <input type="email" id="email">
+    <label>Phone Number</label>
+    <input type="number" id="phnumber">
+    <input type="submit" value="submit">
+    </form>
+    <ul id="listinfo" class="list-group">
+    </ul>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+
+        var infolist = document.getElementById('listinfo');
+        //get id of the form 
+        var dataform = document.getElementById('form');
+        // add an event listener 
+        dataform.addEventListener('submit', savedata);
+
+        //when user reloads the page it should be display all data form crudcrud.com
+        window.addEventListener('load', loadStoredData)
+
+        //fucntion to save data in local storage 
+        function savedata(e){
+            e.preventDefault();
+
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var phnumber = document.getElementById('phnumber').value;
+
+            let formobj = {
+                name ,
+                email,
+                phnumber
+
+            };
+
+            axios.post('https://crudcrud.com/api/d5864c45f94a4c89841a200a6376df8f/appointmentdata', formobj)
+            //the axios return like a promise (then or catch) if promise is successfully then execute .then other wise .catch  
+            .then((response)=>{
+                showUserOnScreen(response.data)
+                //console.log(response);
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+            // //convert the object to string using JSON stringify
+            // var formobj_serialized = JSON.stringify(formobj);
+            // //store into local storage
+            // localStorage.setItem(formobj.email ,formobj_serialized);
+
+            //showUserOnScreen(formobj);
+    
+        }
+        function showUserOnScreen(formobj){
+            const parentElem = document.getElementById('listinfo');
+
+            const childElem = document.createElement('li');
+            childElem.textContent=formobj.name+'-'+ formobj.email+'-'+formobj.phnumber;
+
+            const deletebutton = document.createElement('input');
+            deletebutton.type='button';
+            deletebutton.value='delete';
+            deletebutton.onclick = (data) =>{
+                //delete the appointment details form crudcrud.com
+                axios.delete(`https://crudcrud.com/api/d5864c45f94a4c89841a200a6376df8f/appointmentdata/${formobj._id}`)
+                //localStorage.removeItem(formobj.email);
+                parentElem.removeChild(childElem);
+            }
+
+            const editbtn = document.createElement('input')
+            editbtn.type='button';
+            editbtn.value= 'edit';
+            editbtn.onclick = ()=>{
+                var ename = document.getElementById('name');
+                var eemail = document.getElementById('email');
+                var ephnumber = document.getElementById('phnumber');
+                // Set the input values based on formobj
+                ename.value = formobj.name;
+                eemail.value = formobj.email;
+                ephnumber.value = formobj.phnumber;
+
+                axios.delete(`https://crudcrud.com/api/d5864c45f94a4c89841a200a6376df8f/appointmentdata/${formobj._id}`)
+                //localStorage.removeItem(formobj.email);
+                parentElem.removeChild(childElem);
+
+            }
+            // Create a container div for buttons
+            const buttonContainer = document.createElement('div');
+            // Append buttons to the container div
+            buttonContainer.appendChild(deletebutton);
+            buttonContainer.appendChild(editbtn);
+            childElem.appendChild(buttonContainer);
+            parentElem.appendChild(childElem)
+
+
+        }
+
+
+        function loadStoredData(){
+            axios.get('https://crudcrud.com/api/d5864c45f94a4c89841a200a6376df8f/appointmentdata')
+            .then((resolve)=>{
+                const dataitem = resolve.data
+                dataitem.forEach((data)=>{
+                    showUserOnScreen(data)
+                })
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
+
+        
+
+      
+
+        
+
+
+    </script>
+</body>
+</html>
