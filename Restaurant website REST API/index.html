@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Website</title>
+</head>
+<body>
+    <form id="form">
+        <label>Choose Price</label>
+        <input type="number" id="price">
+        <label>Choose Dish </label>
+        <input type="text"id='dish'>
+        <label>Choose A Table</label>
+        <select name="table" id="table">
+            <option value="table1">table1</option>
+            <option value="table2">table2</option>
+            <option value="table3">table3</option>
+        </select>
+        <input type="submit" value="add prodcut">
+    </form>
+    <h1>Orders</h1>
+    <h2>Table 1</h2>
+    <ul id="table1">
+
+    </ul>
+    <h2>Table 2</h2>
+    <ul id="table2">
+
+    </ul>
+    <h2>Table 3</h2>
+    <ul id="table3">
+
+    </ul>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+    
+
+        let iform = document.getElementById('form');
+
+        iform.addEventListener('submit', savedata);
+
+
+        function savedata(e){
+            e.preventDefault();
+            
+            let price = document.getElementById('price').value;
+            let dish = document.getElementById('dish').value;
+            let table = document.getElementById('table').value;
+
+            let formobj ={
+                price,
+                dish,
+                table
+            }
+
+            axios.post('https://crudcrud.com/api/ed537f5850b147718fdcf1bb36d150b6/restaurant', formobj)
+                .then((response)=>{
+                    displayonscreen(response.data)
+
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+        }
+
+        function displayonscreen(formobj){
+            var gettable = formobj.table
+            if(gettable == 'table1'){
+                const parelement1 = document.getElementById('table1');
+
+                const childelement1 = document.createElement('li');
+
+                childelement1.textContent=formobj.price+'-'+formobj.dish+'-'+formobj.table;
+                
+                const deletebtn1 = document.createElement('input')
+                deletebtn1.type='submit';
+                deletebtn1.value = 'delete';
+                deletebtn1.onclick = (data)=>{
+                    axios.delete(`https://crudcrud.com/api/ed537f5850b147718fdcf1bb36d150b6/restaurant/${formobj._id}`)
+                    parelement1.removeChild(childelement1)
+                }
+                childelement1.appendChild(deletebtn1)
+                parelement1.appendChild(childelement1)
+            }
+            else if(gettable == 'table2'){
+                const parelement1 = document.getElementById('table2');
+
+                const childelement1 = document.createElement('li');
+
+                childelement1.textContent=formobj.price+'-'+formobj.dish+'-'+formobj.table;
+                
+                const deletebtn1 = document.createElement('input')
+                deletebtn1.type='submit';
+                deletebtn1.value = 'delete';
+                deletebtn1.onclick = (data)=>{
+                    axios.delete(`https://crudcrud.com/api/ed537f5850b147718fdcf1bb36d150b6/restaurant/${formobj._id}`)
+                    parelement1.removeChild(childelement1)
+                }
+                childelement1.appendChild(deletebtn1)
+                parelement1.appendChild(childelement1)
+            }
+            else if(gettable == 'table3'){
+                const parelement1 = document.getElementById('table3');
+
+                const childelement1 = document.createElement('li');
+
+                childelement1.textContent=formobj.price+'-'+formobj.dish+'-'+formobj.table;
+                
+                const deletebtn1 = document.createElement('input')
+                deletebtn1.type='submit';
+                deletebtn1.value = 'delete';
+                deletebtn1.onclick = (data)=>{
+                    axios.delete(`https://crudcrud.com/api/ed537f5850b147718fdcf1bb36d150b6/restaurant/${formobj._id}`)
+                    parelement1.removeChild(childelement1)
+                }
+                childelement1.appendChild(deletebtn1)
+                parelement1.appendChild(childelement1)
+            }
+        }
+
+        window.addEventListener('load', ()=>{
+            axios.get('https://crudcrud.com/api/ed537f5850b147718fdcf1bb36d150b6/restaurant')
+                .then((response)=>{
+                    for(var i=0; i<response.data.length;i++){
+                        displayonscreen(response.data[i])
+                    }
+                    
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+        })
+    </script>
+    
+</body>
+</html>
