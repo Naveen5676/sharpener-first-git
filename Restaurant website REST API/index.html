@@ -55,7 +55,7 @@
                 table
             }
 
-            axios.post('https://crudcrud.com/api/ed537f5850b147718fdcf1bb36d150b6/restaurant', formobj)
+            axios.post('https://crudcrud.com/api/12d24fbdb04945299c597738b92ccfe8/restaurant', formobj)
                 .then((response)=>{
                     displayonscreen(response.data)
 
@@ -78,7 +78,7 @@
                 deletebtn1.type='submit';
                 deletebtn1.value = 'delete';
                 deletebtn1.onclick = (data)=>{
-                    axios.delete(`https://crudcrud.com/api/ed537f5850b147718fdcf1bb36d150b6/restaurant/${formobj._id}`)
+                    axios.delete(`https://crudcrud.com/api/12d24fbdb04945299c597738b92ccfe8/restaurant/${formobj._id}`)
                     parelement1.removeChild(childelement1)
                 }
                 childelement1.appendChild(deletebtn1)
@@ -95,7 +95,7 @@
                 deletebtn1.type='submit';
                 deletebtn1.value = 'delete';
                 deletebtn1.onclick = (data)=>{
-                    axios.delete(`https://crudcrud.com/api/ed537f5850b147718fdcf1bb36d150b6/restaurant/${formobj._id}`)
+                    axios.delete(`https://crudcrud.com/api/12d24fbdb04945299c597738b92ccfe8/restaurant/${formobj._id}`)
                     parelement1.removeChild(childelement1)
                 }
                 childelement1.appendChild(deletebtn1)
@@ -112,7 +112,7 @@
                 deletebtn1.type='submit';
                 deletebtn1.value = 'delete';
                 deletebtn1.onclick = (data)=>{
-                    axios.delete(`https://crudcrud.com/api/ed537f5850b147718fdcf1bb36d150b6/restaurant/${formobj._id}`)
+                    axios.delete(`https://crudcrud.com/api/12d24fbdb04945299c597738b92ccfe8/restaurant/${formobj._id}`)
                     parelement1.removeChild(childelement1)
                 }
                 childelement1.appendChild(deletebtn1)
@@ -120,17 +120,21 @@
             }
         }
 
-        window.addEventListener('load', ()=>{
-            axios.get('https://crudcrud.com/api/ed537f5850b147718fdcf1bb36d150b6/restaurant')
-                .then((response)=>{
+        console.log(x)
+        var x=10;
+
+        window.addEventListener('load', async()=>{
+            try{
+            const response = await axios.get('https://crudcrud.com/api/12d24fbdb04945299c597738b92ccfe8/restaurant')
+  
                     for(var i=0; i<response.data.length;i++){
                         displayonscreen(response.data[i])
                     }
                     
-                })
-                .catch((err)=>{
+                }
+                catch(err){
                     console.log(err)
-                })
+                }
         })
     </script>
     
